@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace File_Encryptor
@@ -14,9 +11,12 @@ namespace File_Encryptor
         [STAThread]
         static void Main()
         {
+            //Encryptor.EncryptFile("input.txt", "output.txt", "1234");
+            //Encryptor.DecryptFile("output.txt", "decrypted.txt", "1234");
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());
+            
         }
     }
 }
