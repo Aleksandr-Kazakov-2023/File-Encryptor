@@ -1,13 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace File_Encryptor
@@ -30,28 +23,75 @@ namespace File_Encryptor
             }
         }
 
-        private void encryptButton_Click(object sender, EventArgs e)
+        private bool CheckFields()
         {
-            string outFilePath;
-            string key = passwordTextBox.Text;
             if (path == null)
             {
                 MessageBox.Show("Не выбран файл!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                return false;
             }
 
-            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            if (passwordTextBox.Text.Trim() != repeatPasswordTextBox.Text.Trim())
             {
-                outFilePath = saveFileDialog.FileName;
-                Encryptor.EncryptFile(path, outFilePath, key);
-                
-                Process.Start("explorer.exe", Path.GetDirectoryName(outFilePath));
+                MessageBox.Show("Пароли должны совпадать!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
             }
+
+            if (passwordTextBox.Text.Trim().Length == 0)
+            {
+                MessageBox.Show("Не указан пароль!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            return true;
+        }
+
+        enum FileProcess
+        {
+            Encode,
+            Decode
+        }
+
+        private void DoProcess(FileProcess process)
+        {
+            string outFilePath = null;
+            string key = passwordTextBox.Text;
+
+            if (CheckFields())
+            {
+                if (saveInSameFileCheckBox.Checked)
+                    outFilePath = path;
+                else
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    outFilePath = saveFileDialog.FileName;
+                }
+
+                if (outFilePath != null)
+                {
+                    switch (process)
+                    {
+                        case FileProcess.Encode:
+                            Encryptor.EncryptFile(path, outFilePath, key);
+                            break;
+                        case FileProcess.Decode:
+                            Encryptor.DecryptFile(path, outFilePath, key);
+                            break;
+                    }
+                    if (openPathAfterProcessСheckBox.Checked)
+                        Process.Start("explorer.exe", Path.GetDirectoryName(outFilePath));
+                }
+            }
+        }
+
+        private void encryptButton_Click(object sender, EventArgs e)
+        {
+            DoProcess(FileProcess.Encode);
         }
 
         private void decryptButton_Click(object sender, EventArgs e)
         {
-            throw new System.NotImplementedException();
+            DoProcess(FileProcess.Decode);
         }
     }
 }

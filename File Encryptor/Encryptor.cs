@@ -50,9 +50,18 @@ namespace File_Encryptor
 
         public static void EncryptFile(string inPath, string outPath, string key)
         {
-            // TODO: Не забыть про ситуацию in == out
             StreamReader inStream = new StreamReader(inPath);
-            StreamWriter outStream = new StreamWriter(outPath);
+            StreamWriter outStream;
+
+            if (inPath == outPath)
+            {
+                outStream = new StreamWriter("tmp.dat");
+            }
+            else
+            {
+                outStream = new StreamWriter(outPath);
+            }
+            
             while (!inStream.EndOfStream)
             {
                 String line = inStream.ReadLine();
@@ -60,12 +69,27 @@ namespace File_Encryptor
             }
             inStream.Close();
             outStream.Close();
+            if (inPath == outPath)
+            {
+                File.Delete(inPath);
+                File.Move("tmp.dat", inPath);
+            }
         }
         
         public static void DecryptFile(string inPath, string outPath, string key)
         {
             StreamReader inStream = new StreamReader(inPath);
-            StreamWriter outStream = new StreamWriter(outPath);
+            StreamWriter outStream;
+
+            if (inPath == outPath)
+            {
+                outStream = new StreamWriter("tmp.dat");
+            }
+            else
+            {
+                outStream = new StreamWriter(outPath);
+            }
+            
             while (!inStream.EndOfStream)
             {
                 String line = inStream.ReadLine();
@@ -73,6 +97,11 @@ namespace File_Encryptor
             }
             inStream.Close();
             outStream.Close();
+            if (inPath == outPath)
+            {
+                File.Delete(inPath);
+                File.Move("tmp.dat", inPath);
+            }
         }
     }
 }

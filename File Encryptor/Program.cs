@@ -6,13 +6,13 @@ namespace File_Encryptor
     static class Program
     {
         /// <summary>
-        /// The main entry point for the application.
+        /// TODO: 
+        ///       3. Кодирование любых типоф файлов
+        ///       4. Progress Bar или Loading window
         /// </summary>
         [STAThread]
         static void Main()
         {
-            //Encryptor.EncryptFile("input.txt", "output.txt", "1234");
-            //Encryptor.DecryptFile("output.txt", "decrypted.txt", "1234");
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());

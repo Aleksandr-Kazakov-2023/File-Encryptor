@@ -42,6 +42,8 @@
             this.repeatPasswordTextBox = new System.Windows.Forms.TextBox();
             this.pathTextBox = new System.Windows.Forms.TextBox();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.openPathAfterProcessСheckBox = new System.Windows.Forms.CheckBox();
+            this.saveInSameFileCheckBox = new System.Windows.Forms.CheckBox();
             this.mainMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -50,6 +52,7 @@
             this.passwordTextBox.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
             this.passwordTextBox.Location = new System.Drawing.Point(210, 137);
             this.passwordTextBox.Name = "passwordTextBox";
+            this.passwordTextBox.PasswordChar = '*';
             this.passwordTextBox.Size = new System.Drawing.Size(205, 33);
             this.passwordTextBox.TabIndex = 0;
             // 
@@ -71,7 +74,7 @@
             // encryptButton
             // 
             this.encryptButton.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
-            this.encryptButton.Location = new System.Drawing.Point(83, 290);
+            this.encryptButton.Location = new System.Drawing.Point(83, 278);
             this.encryptButton.Name = "encryptButton";
             this.encryptButton.Size = new System.Drawing.Size(205, 40);
             this.encryptButton.TabIndex = 2;
@@ -104,7 +107,7 @@
             this.mainMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {this.fileToolStripMenuItem, this.aboutToolStripMenuItem});
             this.mainMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.mainMenuStrip.Name = "mainMenuStrip";
-            this.mainMenuStrip.Size = new System.Drawing.Size(672, 29);
+            this.mainMenuStrip.Size = new System.Drawing.Size(654, 29);
             this.mainMenuStrip.TabIndex = 5;
             this.mainMenuStrip.Text = "menuStrip1";
             // 
@@ -125,7 +128,7 @@
             // decryptButton
             // 
             this.decryptButton.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
-            this.decryptButton.Location = new System.Drawing.Point(364, 290);
+            this.decryptButton.Location = new System.Drawing.Point(358, 278);
             this.decryptButton.Name = "decryptButton";
             this.decryptButton.Size = new System.Drawing.Size(205, 40);
             this.decryptButton.TabIndex = 6;
@@ -138,6 +141,7 @@
             this.repeatPasswordTextBox.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
             this.repeatPasswordTextBox.Location = new System.Drawing.Point(210, 193);
             this.repeatPasswordTextBox.Name = "repeatPasswordTextBox";
+            this.repeatPasswordTextBox.PasswordChar = '*';
             this.repeatPasswordTextBox.Size = new System.Drawing.Size(205, 33);
             this.repeatPasswordTextBox.TabIndex = 7;
             // 
@@ -153,11 +157,33 @@
             this.pathTextBox.TabIndex = 8;
             this.pathTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
+            // openPathAfterProcessСheckBox
+            // 
+            this.openPathAfterProcessСheckBox.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
+            this.openPathAfterProcessСheckBox.Location = new System.Drawing.Point(83, 352);
+            this.openPathAfterProcessСheckBox.Name = "openPathAfterProcessСheckBox";
+            this.openPathAfterProcessСheckBox.Size = new System.Drawing.Size(433, 27);
+            this.openPathAfterProcessСheckBox.TabIndex = 9;
+            this.openPathAfterProcessСheckBox.Text = "Открыть папку с файлом после завершения";
+            this.openPathAfterProcessСheckBox.UseVisualStyleBackColor = true;
+            // 
+            // saveInSameFileCheckBox
+            // 
+            this.saveInSameFileCheckBox.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
+            this.saveInSameFileCheckBox.Location = new System.Drawing.Point(83, 385);
+            this.saveInSameFileCheckBox.Name = "saveInSameFileCheckBox";
+            this.saveInSameFileCheckBox.Size = new System.Drawing.Size(287, 29);
+            this.saveInSameFileCheckBox.TabIndex = 10;
+            this.saveInSameFileCheckBox.Text = "Сохранять в исходный файл";
+            this.saveInSameFileCheckBox.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(672, 455);
+            this.ClientSize = new System.Drawing.Size(654, 428);
+            this.Controls.Add(this.saveInSameFileCheckBox);
+            this.Controls.Add(this.openPathAfterProcessСheckBox);
             this.Controls.Add(this.pathTextBox);
             this.Controls.Add(this.repeatPasswordTextBox);
             this.Controls.Add(this.decryptButton);
@@ -175,6 +201,9 @@
             this.ResumeLayout(false);
             this.PerformLayout();
         }
+
+        private System.Windows.Forms.CheckBox openPathAfterProcessСheckBox;
+        private System.Windows.Forms.CheckBox saveInSameFileCheckBox;
 
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
 
