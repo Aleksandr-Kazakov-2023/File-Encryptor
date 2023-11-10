@@ -6,9 +6,9 @@ namespace File_Encryptor
     static class Program
     {
         /// <summary>
-        /// TODO: 
+        /// TODO:
+        ///       2. Сообщение об неуспешном выполнении (может быть не всплывающим)
         ///       3. Кодирование любых типоф файлов
-        ///       4. Progress Bar или Loading window
         /// </summary>
         [STAThread]
         static void Main()

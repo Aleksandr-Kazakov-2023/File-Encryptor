@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using File_Encryptor.Properties;
 
 namespace File_Encryptor
 {
@@ -52,17 +56,18 @@ namespace File_Encryptor
             Decode
         }
 
+        private delegate DialogResult ShowSaveFileDialogInvoker();
+
         private void DoProcess(FileProcess process)
         {
             string outFilePath = null;
             string key = passwordTextBox.Text;
-
+            ShowSaveFileDialogInvoker invoker = saveFileDialog.ShowDialog;
             if (CheckFields())
             {
                 if (saveInSameFileCheckBox.Checked)
                     outFilePath = path;
-                else
-                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                else if (Invoke(invoker).Equals(DialogResult.OK))
                 {
                     outFilePath = saveFileDialog.FileName;
                 }
@@ -78,20 +83,54 @@ namespace File_Encryptor
                             Encryptor.DecryptFile(path, outFilePath, key);
                             break;
                     }
+
                     if (openPathAfterProcessСheckBox.Checked)
                         Process.Start("explorer.exe", Path.GetDirectoryName(outFilePath));
+                    resultPictureBox.Image = Resources.success;
+                    resultPictureBox.Invalidate();
+                    Task.Factory.StartNew(() => Thread.Sleep(6000))
+                        .ContinueWith((t) =>
+                        {
+                            resultPictureBox.Image = null;
+                        }, TaskContinuationOptions.ExecuteSynchronously);
                 }
             }
         }
 
         private void encryptButton_Click(object sender, EventArgs e)
         {
-            DoProcess(FileProcess.Encode);
+            Task.Run(() =>
+            {
+                encryptButton.Image = Resources.loading;
+                encryptButton.ImageAlign = ContentAlignment.MiddleCenter;
+                encryptButton.Text = "";
+                DoProcess(FileProcess.Encode);
+                encryptButton.Text = "Зашифровать...";
+                encryptButton.Image = null;
+                passwordTextBox.Text = "";
+                repeatPasswordTextBox.Text = "";
+                pathTextBox.Text = "";
+                path = null;
+            });
         }
 
         private void decryptButton_Click(object sender, EventArgs e)
         {
-            DoProcess(FileProcess.Decode);
+            Task decrypt = new Task(() =>
+            {
+                Image img = Resources.loading;
+                decryptButton.Image = img;
+                decryptButton.ImageAlign = ContentAlignment.MiddleCenter;
+                decryptButton.Text = "";
+                DoProcess(FileProcess.Decode);
+                decryptButton.Text = "Расшифровать...";
+                decryptButton.Image = null;
+                passwordTextBox.Text = "";
+                repeatPasswordTextBox.Text = "";
+                pathTextBox.Text = "";
+                path = null;
+            });
+            decrypt.Start();
         }
     }
 }

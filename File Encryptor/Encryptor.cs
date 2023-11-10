@@ -61,7 +61,7 @@ namespace File_Encryptor
             {
                 outStream = new StreamWriter(outPath);
             }
-            
+
             while (!inStream.EndOfStream)
             {
                 String line = inStream.ReadLine();
